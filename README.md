@@ -1,160 +1,162 @@
-# 0x00. AirBnB clone - The console
-**Creation of a command interpreter to manage the hbnb projects**
-## <p align="center">![alt text](https://github.com/Dikachis/AirBnB_clone/blob/main/web_static/images/65f4a1dd9c51265f49d0.png?raw=true)</p>
+# AirBnB Clone - The Console
+The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
 
-## Description of the project
-This is the first step towards building your first full web application: the **AirBnB clone**. The aim of the project is to deploy a replica of the [Airbnb Website](https://www.airbnb.com/) using my server. The final version of this project will have:
-- ```A command interpreter to manipulate data without a visual interface, like a shell (for development and debugging)```
-- ```A website (front-end) with static and dynamic functionalities```
-- ```A comprehensive database to manage the backend functionalities```
-- ```An API that provides a communication interface between the front and backend of the system.```
+#### Functionalities of this command interpreter:
+* Create a new object (ex: a new User or a new Place)
+* Retrieve an object from a file, a database etc...
+* Do operations on objects (count, compute stats, etc...)
+* Update attributes of an object
+* Destroy an object
 
-### Resources
-* ```Videos showing examples of how various parts of the project work, listed below:```
-* [HBNB videos](https://www.youtube.com/playlist?list=PLlLHfkTcnvmPOp6jv_89tRpJUMFrP-Wbi)
-* [Holberton Airbnb overview](https://www.youtube.com/watch?v=QTwmCB_AWqI)
-* [The Airbnb Console](https://www.youtube.com/watch?v=jeJwRB33YNg)
-* [Airbnb ORM](https://www.youtube.com/watch?v=ZwCD8cNZk9U)
-* [Airbnb API](https://www.youtube.com/watch?v=LrQhULlFJdU)
-* [Final product](https://www.youtube.com/watch?v=m-cfupVumos)
-* ```Other resource```
-* [cmd module](https://docs.python.org/3.8/library/cmd.html)
-    * ```packages concept page```
-    * [Python packages](https://docs.python.org/3.4/tutorial/modules.html#packages)
-    * [uuid module](https://docs.python.org/3.8/library/uuid.html)
-    * [datetime](https://docs.python.org/3.8/library/datetime.html)
-    * [unittest module](https://docs.python.org/3.8/library/unittest.html#module-unittest)
-    * [args/kwargs](https://yasoob.me/2013/08/04/args-and-kwargs-in-python-explained/)
-    * [Python test cheatsheet](https://www.pythonsheets.com/notes/python-tests.html)
-    * [ AirBnB website.](https://www.airbnb.com/)
+## Table of Content
+* [Environment](#environment)
+* [Installation](#installation)
+* [File Descriptions](#file-descriptions)
+* [Usage](#usage)
+* [Examples of use](#examples-of-use)
+* [Bugs](#bugs)
+* [Authors](#authors)
+* [License](#license)
 
-## Aims & Objectives of this project
-**This will help to be able to manage the objects of our project:**
-- ```Creation of a new object (ex: a new "User" or a new "Place")```
-- ```Retrieval of an object from a file storage, a database etc… ```
-- ```Perform operations on objects (count, compute stats, etc…)```
-- ```Update attributes of an object```
-- ```Destroy an object```
-## The created objects
-**The list of the objects (instances) that can be created are as follows:**
-- BaseModel
-- User
-- City
-- Amenity
-- State
-- Review
-- Place
+## Environment
+This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.4.3)
 
-## Files and Directories
-- ```models``` directory contains all classes used for the entire project. A class, called “model” in a OOP project is the representation of an object/instance.
-- ```tests``` directory contains all unit tests.
-- ```console.py``` file is the entry point of our command interpreter.
-- ```models/base_model.py``` file is the base class of all our models. It contains common elements:
-    - attributes: ```id```, ```created_at``` and ```updated_at```
-    - methods: ```save()``` and ```to_json()```
-- ```models/engine``` directory contains all storage classes (using the same prototype). For the moment I will have only one: ```file_storage.py```.
+## Installation
+* Clone this repository: `git clone "https://github.com/alexaorrico/AirBnB_clone.git"`
+* Access AirBnb directory: `cd AirBnB_clone`
+* Run hbnb(interactively): `./console` and enter command
+* Run hbnb(non-interactively): `echo "<command>" | ./console.py`
 
-The project's implementation will happen in the following phases:
-## Phase One
-The first phase is to manipulate a powerful storage system to give an abstraction between objects and how they are stored and persisted. To achieve this, I will:
-- put in place a parent class (called ```BaseModel```) to take care of the initialization, serialization and deserialization of my future instances
-- create a simple flow of serialization/deserialization: Instance <-> Dictionary <-> JSON string <-> file
-- create all classes used for AirBnB (```User, State, City, Place…```) that inherit from ```BaseModel```
-- create the first abstracted storage engine of the project: File storage.
-- create all unittests to validate all our classes and storage engine
-- Create a data model
-- Manage (create, update, destroy, etc) objects via a console/command interpreter
-- Store and persist objects to files (JSON files)
+## File Descriptions
+[console.py](console.py) - the console contains the entry point of the command interpreter. 
+List of commands this console current supports:
+* `EOF` - exits console 
+* `quit` - exits console
+* `<emptyline>` - overwrites default emptyline method and does nothing
+* `create` - Creates a new instance of`BaseModel`, saves it (to the JSON file) and prints the id
+* `destroy` - Deletes an instance based on the class name and id (save the change into the JSON file). 
+* `show` - Prints the string representation of an instance based on the class name and id.
+* `all` - Prints all string representation of all instances based or not on the class name. 
+* `update` - Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file). 
 
-## Commands Implemented
-**Description of the command interpreter**
-| Commands  | Description |
-| ------------- | ------------- |
-| ```quit```  | This command quits or exits the console  |
-| ```EOF```  | This command quits or exits the console interpreter when pressed ```Ctrl+D``` |
-| ```help``` or ```help <command>```  | Displays all commands or Displays instructions for a specific command (Ex: ```help``` or ```help quit```).
-| ```create <class>```  | Creates an object of type, saves it to a JSON file, and prints the objects ID (Ex: ```create BaseModel``` or ```BaseModel.create()```)
-| ```show <class> <ID>```  | Shows string representation of an object (Ex: ```show BaseModel 1234-1234-1234``` or ```BaseModel.show("1234-1234-1234"```))
-| ```destroy <class> <ID>```  | Deletes an objects based on the class name and id (Ex: ```destroy BaseModel 1234-1234-1234``` or ```BaseModel.destroy("1234-1234-1234")```).
-| ```all or all <class>```  | Prints all string representations of all objects or Prints all string representations of all objects of a specific class (Ex: ```all BaseModel``` or ```all or User.all()```).
-| ```update <class> <id> <attribute name> "<attribute value>"```  | Updates an object with a certain attribute (new or existing) (```Usage: update <class name> <id> <attribute name> "<attribute value>```).
-| ```<class>.all()```  | Same as all ```<class>```
-| ```<class>.count()```  | Retrieves the number of objects of a certain class (```Usage: <class name>.count(), Example: User.count()```).
-| ```<class>.show(<ID>)```  | Same as show ```<class> <ID>```
-| ```<class>.destroy(<ID>)```  | Same as destroy ```<class> <ID>```
-| ```<class>.update(<ID>, <attribute name>, <attribute value>```  | Same as update ```<class> <ID> <attribute name> <attribute value>```
-| ```<class>.update(<ID>, <dictionary representation>)```  | Updates an objects based on a dictionary representation of attribute names and values
+#### `models/` directory contains classes used for this project:
+[base_model.py](/models/base_model.py) - The BaseModel class from which future classes will be derived
+* `def __init__(self, *args, **kwargs)` - Initialization of the base model
+* `def __str__(self)` - String representation of the BaseModel class
+* `def save(self)` - Updates the attribute `updated_at` with the current datetime
+* `def to_dict(self)` - returns a dictionary containing all keys/values of the instance
 
-## Compilation
-**To start up the interpreter, clone this repository, and run the console file on linux as follows:**
-- Clone this repository: ```git clone "https://github.com/Dikachis/AirBnB_clone.git"```
-- Access AirBnb directory: ```cd AirBnB_clone```
-- Run hbnb(interactively): ```./console``` and then press enter command
-- Run hbnb(non-interactively): ```echo "<command>" | ./console.py```
+Classes inherited from Base Model:
+* [amenity.py](/models/amenity.py)
+* [city.py](/models/city.py)
+* [place.py](/models/place.py)
+* [review.py](/models/review.py)
+* [state.py](/models/state.py)
+* [user.py](/models/user.py)
 
+#### `/models/engine` directory contains File Storage class that handles JASON serialization and deserialization :
+[file_storage.py](/models/engine/file_storage.py) - serializes instances to a JSON file & deserializes back to instances
+* `def all(self)` - returns the dictionary __objects
+* `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id
+* `def save(self)` - serializes __objects to the JSON file (path: __file_path)
+* ` def reload(self)` -  deserializes the JSON file to __objects
+
+#### `/tests` directory contains all unit test cases for this project:
+[/test_models/test_base_model.py](/tests/test_models/test_base_model.py) - Contains the TestBaseModel and TestBaseModelDocs classes
+TestBaseModelDocs class:
+* `def setUpClass(cls)`- Set up for the doc tests
+* `def test_pep8_conformance_base_model(self)` - Test that models/base_model.py conforms to PEP8
+* `def test_pep8_conformance_test_base_model(self)` - Test that tests/test_models/test_base_model.py conforms to PEP8
+* `def test_bm_module_docstring(self)` - Test for the base_model.py module docstring
+* `def test_bm_class_docstring(self)` - Test for the BaseModel class docstring
+* `def test_bm_func_docstrings(self)` - Test for the presence of docstrings in BaseModel methods
+
+TestBaseModel class:
+* `def test_is_base_model(self)` - Test that the instatiation of a BaseModel works
+* `def test_created_at_instantiation(self)` - Test created_at is a pub. instance attribute of type datetime
+* `def test_updated_at_instantiation(self)` - Test updated_at is a pub. instance attribute of type datetime
+* `def test_diff_datetime_objs(self)` - Test that two BaseModel instances have different datetime objects
+
+[/test_models/test_amenity.py](/tests/test_models/test_amenity.py) - Contains the TestAmenityDocs class:
+* `def setUpClass(cls)` - Set up for the doc tests
+* `def test_pep8_conformance_amenity(self)` - Test that models/amenity.py conforms to PEP8
+* `def test_pep8_conformance_test_amenity(self)` - Test that tests/test_models/test_amenity.py conforms to PEP8
+* `def test_amenity_module_docstring(self)` - Test for the amenity.py module docstring
+* `def test_amenity_class_docstring(self)` - Test for the Amenity class docstring
+
+[/test_models/test_city.py](/tests/test_models/test_city.py) - Contains the TestCityDocs class:
+* `def setUpClass(cls)` - Set up for the doc tests
+* `def test_pep8_conformance_city(self)` - Test that models/city.py conforms to PEP8
+* `def test_pep8_conformance_test_city(self)` - Test that tests/test_models/test_city.py conforms to PEP8
+* `def test_city_module_docstring(self)` - Test for the city.py module docstring
+* `def test_city_class_docstring(self)` - Test for the City class docstring
+
+[/test_models/test_file_storage.py](/tests/test_models/test_file_storage.py) - Contains the TestFileStorageDocs class:
+* `def setUpClass(cls)` - Set up for the doc tests
+* `def test_pep8_conformance_file_storage(self)` - Test that models/file_storage.py conforms to PEP8
+* `def test_pep8_conformance_test_file_storage(self)` - Test that tests/test_models/test_file_storage.py conforms to PEP8
+* `def test_file_storage_module_docstring(self)` - Test for the file_storage.py module docstring
+* `def test_file_storage_class_docstring(self)` - Test for the FileStorage class docstring
+
+[/test_models/test_place.py](/tests/test_models/test_place.py) - Contains the TestPlaceDoc class:
+* `def setUpClass(cls)` - Set up for the doc tests
+* `def test_pep8_conformance_place(self)` - Test that models/place.py conforms to PEP8.
+* `def test_pep8_conformance_test_place(self)` - Test that tests/test_models/test_place.py conforms to PEP8.
+* `def test_place_module_docstring(self)` - Test for the place.py module docstring
+* `def test_place_class_docstring(self)` - Test for the Place class docstring
+
+[/test_models/test_review.py](/tests/test_models/test_review.py) - Contains the TestReviewDocs class:
+* `def setUpClass(cls)` - Set up for the doc tests
+* `def test_pep8_conformance_review(self)` - Test that models/review.py conforms to PEP8
+* `def test_pep8_conformance_test_review(self)` - Test that tests/test_models/test_review.py conforms to PEP8
+* `def test_review_module_docstring(self)` - Test for the review.py module docstring
+* `def test_review_class_docstring(self)` - Test for the Review class docstring
+
+[/test_models/state.py](/tests/test_models/test_state.py) - Contains the TestStateDocs class:
+* `def setUpClass(cls)` - Set up for the doc tests
+* `def test_pep8_conformance_state(self)` - Test that models/state.py conforms to PEP8
+* `def test_pep8_conformance_test_state(self)` - Test that tests/test_models/test_state.py conforms to PEP8
+* `def test_state_module_docstring(self)` - Test for the state.py module docstring
+* `def test_state_class_docstring(self)` - Test for the State class docstring
+
+[/test_models/user.py](/tests/test_models/test_user.py) - Contains the TestUserDocs class:
+* `def setUpClass(cls)` - Set up for the doc tests
+* `def test_pep8_conformance_user(self)` - Test that models/user.py conforms to PEP8
+* `def test_pep8_conformance_test_user(self)` - Test that tests/test_models/test_user.py conforms to PEP8
+* `def test_user_module_docstring(self)` - Test for the user.py module docstring
+* `def test_user_class_docstring(self)` - Test for the User class docstring
+
+
+## Examples of use
 ```
-$ ./console.py
+vagrantAirBnB_clone$./console.py
 (hbnb) help
 
 Documented commands (type help <topic>):
 ========================================
-EOF  help  quit
-(hbnb) 
-(hbnb) 
-(hbnb) quit
-$
-But also in non-interactive mode: (like the Shell project in C)
+EOF  all  create  destroy  help  quit  show  update
 
-$ echo "help" | ./console.py
-(hbnb)
-
-Documented commands (type help <topic>):
-========================================
-EOF  help  quit
-(hbnb) 
-$
-$ cat test_help
-help
-$
-$ cat test_help | ./console.py
-(hbnb)
-
-Documented commands (type help <topic>):
-========================================
-EOF  help  quit
-(hbnb)
-$
-```
-
-```
-guillaume@ubuntu:~/AirBnB$ ./console.py
 (hbnb) all MyModel
 ** class doesn't exist **
-(hbnb) show BaseModel
-** instance id missing **
-(hbnb) show BaseModel My_First_Model
-** no instance found **
 (hbnb) create BaseModel
-49faff9a-6318-451f-87b6-910505c55907
+7da56403-cc45-4f1c-ad32-bfafeb2bb050
 (hbnb) all BaseModel
-["[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'id': '49faff9a-6318-451f-87b6-910505c55907', 'updated_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903300)}"]
-(hbnb) show BaseModel 49faff9a-6318-451f-87b6-910505c55907
-[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'id': '49faff9a-6318-451f-87b6-910505c55907', 'updated_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903300)}
-(hbnb) destroy
-** class name missing **
-(hbnb) update BaseModel 49faff9a-6318-451f-87b6-910505c55907 first_name "Betty"
-(hbnb) show BaseModel 49faff9a-6318-451f-87b6-910505c55907
-[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'first_name': 'Betty', 'id': '49faff9a-6318-451f-87b6-910505c55907', 'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'updated_at': datetime.datetime(2017, 10, 2, 3, 11, 3, 49401)}
-(hbnb) create BaseModel
-2dd6ef5c-467c-4f82-9521-a772ea7d84e9
-(hbnb) all BaseModel
-["[BaseModel] (2dd6ef5c-467c-4f82-9521-a772ea7d84e9) {'id': '2dd6ef5c-467c-4f82-9521-a772ea7d84e9', 'created_at': datetime.datetime(2017, 10, 2, 3, 11, 23, 639717), 'updated_at': datetime.datetime(2017, 10, 2, 3, 11, 23, 639724)}", "[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'first_name': 'Betty', 'id': '49faff9a-6318-451f-87b6-910505c55907', 'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'updated_at': datetime.datetime(2017, 10, 2, 3, 11, 3, 49401)}"]
-(hbnb) destroy BaseModel 49faff9a-6318-451f-87b6-910505c55907
-(hbnb) show BaseModel 49faff9a-6318-451f-87b6-910505c55907
+[[BaseModel] (7da56403-cc45-4f1c-ad32-bfafeb2bb050) {'updated_at': datetime.datetime(2017, 9, 28, 9, 50, 46, 772167), 'id': '7da56403-cc45-4f1c-ad32-bfafeb2bb050', 'created_at': datetime.datetime(2017, 9, 28, 9, 50, 46, 772123)}]
+(hbnb) show BaseModel 7da56403-cc45-4f1c-ad32-bfafeb2bb050
+[BaseModel] (7da56403-cc45-4f1c-ad32-bfafeb2bb050) {'updated_at': datetime.datetime(2017, 9, 28, 9, 50, 46, 772167), 'id': '7da56403-cc45-4f1c-ad32-bfafeb2bb050', 'created_at': datetime.datetime(2017, 9, 28, 9, 50, 46, 772123)}
+(hbnb) destroy BaseModel 7da56403-cc45-4f1c-ad32-bfafeb2bb050
+(hbnb) show BaseModel 7da56403-cc45-4f1c-ad32-bfafeb2bb050
 ** no instance found **
-(hbnb) 
+(hbnb) quit
 ```
 
-# Authors
-- Okpara Onyedikachi G
-- Moses Odunosho
+## Bugs
+No known bugs at this time. 
+
+## Authors
+Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
+Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+
+Second part of Airbnb: Joann Vuong
+## License
+Public Domain. No copy write protection. 
